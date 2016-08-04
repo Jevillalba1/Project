@@ -99,7 +99,7 @@ class AlumnoModel
     {
         try 
         {
-            $sql = "UPDATE lista SET 
+            $sql = "UPDATE registro SET 
                         Nombre          = ?, 
                         Apellido        = ?,
                         Direccion       = ?, 
