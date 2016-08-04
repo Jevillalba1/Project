@@ -1,5 +1,5 @@
 <?php
-class ENfermedadesModel
+class ProveedorModel
 {
     private $pdo;
     public function __CONSTRUCT()
@@ -19,16 +19,17 @@ class ENfermedadesModel
         try
         {
             $result = array();
-            $stm = $this->pdo->prepare("SELECT * FROM enfermedades");
+            $stm = $this->pdo->prepare("SELECT * FROM proveedor");
             $stm->execute();
 
             foreach($stm->fetchAll(PDO::FETCH_OBJ) as $r)
             {
-                $alm = new enfermedades();
-                $alm->__SET('Id_Enfermedad', $r->Id_Enfermedad);
+                $alm = new proveedor();
+                $alm->__SET('Id_Proveedor', $r->Id_Proveedor);
                 $alm->__SET('Nombre', $r->Nombre);
-                $alm->__SET('Gravedad', $r->Gravedad);
-                $alm->__SET('Descripcion', $r->Descripcion);
+                $alm->__SET('Telefono', $r->Telefono);
+                $alm->__SET('Direccion', $r->Direccion);
+                $alm->__SET('Estado', $r->Estado);
 
                 $result[] = $alm;
             }
@@ -40,21 +41,21 @@ class ENfermedadesModel
             die($e->getMessage());
         }
     }
-    public function Obtener($Id_Enfermedad)
+    public function Obtener($Id_Proveedor)
     {
         try 
         {
             $stm = $this->pdo
-                      ->prepare("SELECT * FROM enfermedades WHERE Id_Enfermedad = ?");               
-            $stm->execute(array($Id_Enfermedad));
+                      ->prepare("SELECT * FROM proveedor WHERE Id_Proveedor = ?");               
+            $stm->execute(array($Id_Proveedor));
             $r = $stm->fetch(PDO::FETCH_OBJ);
 
-            $alm = new enfermedades();
-//Se almacenan los resultados de la consulta en variables
-                $alm->__SET('Id_Enfermedad', $r->Id_Enfermedad);
+            $alm = new proveedor();
+                $alm->__SET('Id_Proveedor', $r->Id_Proveedor);
                 $alm->__SET('Nombre', $r->Nombre);
-                $alm->__SET('Gravedad', $r->Gravedad);
-                $alm->__SET('Descripcion', $r->Descripcion);
+                $alm->__SET('Telefono', $r->Telefono);
+                $alm->__SET('Direccion', $r->Direccion);
+                $alm->__SET('Estado', $r->Estado);
 
             return $alm;
         } catch (Exception $e) 
@@ -62,37 +63,38 @@ class ENfermedadesModel
             die($e->getMessage());
         }
     }
-    public function Eliminar($Id_Enfermedad)
+    public function Eliminar($Id_Proveedor)
     {
         try 
         {
             $stm = $this->pdo
-                      ->prepare("DELETE FROM enfermedades WHERE Id_Enfermedad = ?");                      
+                      ->prepare("DELETE FROM proveedor WHERE Id_Proveedor = ?");                      
 
-            $stm->execute(array($Id_Enfermedad));
+            $stm->execute(array($Id_Proveedor));
         } catch (Exception $e) 
         {
             die($e->getMessage());
         }
     }
-//Se crea la funcion de tipo publica llamada "Actualizar"
-    public function Actualizar(enfermedades $data)
+    public function Actualizar(proveedor $data)
     {
         try 
         {
-            $sql = "UPDATE enfermedades SET 
+            $sql = "UPDATE proveedor SET 
                         Nombre          = ?, 
-                        Gravedad        = ?,
-                        Descripcion     = ? 
-                WHERE Id_Enfermedad = ?";
+                        Telefono        = ?,
+                        Direccion       = ?,
+                        Estado          = ? 
+                WHERE Id_Proveedor = ?";
 
             $this->pdo->prepare($sql)
                  ->execute(
                 array(
                     $data->__GET('Nombre'), 
-                    $data->__GET('Gravedad'), 
-                    $data->__GET('Descripcion'),
-                    $data->__GET('Id_Enfermedad')
+                    $data->__GET('Telefono'), 
+                    $data->__GET('Direccion'),
+                    $data->__GET('Estado'),
+                    $data->__GET('Id_Proveedor')
                     )                    
                 );
         } catch (Exception $e) 
@@ -101,21 +103,22 @@ class ENfermedadesModel
         }
     }
 
-    public function Registrar(enfermedades $data)
+    public function Registrar(proveedor $data)
     {
         try 
         {
 
-        $sql = "INSERT INTO enfermedades (Id_Enfermedad,Nombre,Gravedad,Descripcion) 
-                VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO proveedor (Id_Proveedor,Nombre,Telefono,Direccion,Estado) 
+                VALUES (?, ?, ?, ?, ?)";
 
         $this->pdo->prepare($sql)
              ->execute(
             array(
-                $data->__GET('Id_Enfermedad'),
+                $data->__GET('Id_Proveedor'),
                 $data->__GET('Nombre'), 
-                $data->__GET('Gravedad'), 
-                $data->__GET('Descripcion'),
+                $data->__GET('Telefono'), 
+                $data->__GET('Direccion'),
+                $data->__GET('Estado'),
                 )
             );
         } catch (Exception $e) 

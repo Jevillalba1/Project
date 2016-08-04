@@ -1,47 +1,49 @@
 <?php
-require_once 'enfermedad.entidad.php';
-require_once 'enfermedad.model.php';
+require_once 'proveedor.entidad.php';
+require_once 'proveedor.model.php';
 
-$alm = new Enfermedades();
-$model = new EnfermedadesModel();
+$alm = new proveedor();
+$model = new ProveedorModel();
 
 if(isset($_REQUEST['action']))
 {
     switch($_REQUEST['action'])
     {
         case 'actualizar':
-            $alm->__SET('Id_Enfermedad',   $_REQUEST['Id_Enfermedad']);
-            $alm->__SET('Nombre',          $_REQUEST['Nombre']);
-            $alm->__SET('Gravedad',        $_REQUEST['Gravedad']);
-            $alm->__SET('Descripcion',     $_REQUEST['Descripcion']);
+            $alm->__SET('Id_Proveedor',     $_REQUEST['Id_Proveedor']);
+            $alm->__SET('Nombre',           $_REQUEST['Nombre']);
+            $alm->__SET('Telefono',         $_REQUEST['Telefono']);
+            $alm->__SET('Direccion',        $_REQUEST['Direccion']);
+            $alm->__SET('Estado',           $_REQUEST['Estado']);
 
             $model->Actualizar($alm);
-            header('Location: Enfermedades.php');
+            header('Location: Proveedor.php');
             break;
 
         case 'registrar':
-            $alm->__SET('Id_Enfermedad',   $_REQUEST['Id_Enfermedad']);
-            $alm->__SET('Nombre',          $_REQUEST['Nombre']);
-            $alm->__SET('Gravedad',        $_REQUEST['Gravedad']);
-            $alm->__SET('Descripcion',     $_REQUEST['Descripcion']);
+            $alm->__SET('Id_Proveedor',     $_REQUEST['Id_Proveedor']);
+            $alm->__SET('Nombre',           $_REQUEST['Nombre']);
+            $alm->__SET('Telefono',         $_REQUEST['Telefono']);
+            $alm->__SET('Direccion',        $_REQUEST['Direccion']);
+            $alm->__SET('Estado',           $_REQUEST['Estado']);
 
             $model->Registrar($alm);
-            header('Location: Enfermedades.php');
+            header('Location: Proveedor.php');
             break;
 
         case 'eliminar':
-            $model->Eliminar($_REQUEST['Id_Enfermedad']);
-            header('Location: Enfermedades.php');
+            $model->Eliminar($_REQUEST['Id_Proveedor']);
+            header('Location: Proveedor.php');
             break;
 
         case 'editar':
-            $alm = $model->Obtener($_REQUEST['Id_Enfermedad']);
+            $alm = $model->Obtener($_REQUEST['Id_Proveedor']);
             break;
     }
 }
 ?>
  
- <title>Enfermedades</title>
+ <title>Gesti&oacuten de proveedores</title>
         <head  profile="http://www.w3.org/2005/10/profile">
             <link rel="icon" type="image/png" href="../9.png">
             <link rel="stylesheet" type="text/css" href="../Style.css"> 
@@ -51,17 +53,17 @@ if(isset($_REQUEST['action']))
             </marquee>
             <font face="Comic Sans Ms" color="44D024" size="3"
             >
-            <body link="#0EC99D" vlink="#0EC99D" alink="#0EC99D">
+            <body link=white vlink=white alink=white>
             <a href="Index.html"><right>Iniciar Sesi&oacuten</right></a> | <a href="Registro.php"><right>Registrarse</right></a>
             </font>
             <hr style="border: 2px solid #791DD5; background-color:#286F2C; height: 5px; width: 90%; margin: 0 auto;"> </hr>
             <center> 
                 <marquee width = 70% height = "30" SCROLLAMOUNT = 10 bgcolor = "F3EAEA" direction = left> 
-                    <font face = "Verdana", size = 5 , color = black>  Todo lo que busca en un solo lugar </font> 
+                    <font face = "Verdana", size = 5 , color = black>  GESTION DE PROVEEDORES </font> 
                 </center>
             </marquee>
         </head>
-   <Body background = "..\10.jpg">
+    <Body background = "..\10.jpg">
     <form method=GET action="https://www.google.com/search">
     <TABLE  align =left style="position:absolute;top:135px;right:140px;"  ><tr><td>
     <A HREF="https://www.google.com/webhp?hl=es">
@@ -83,10 +85,7 @@ if(isset($_REQUEST['action']))
                 </li>
                 <li><a href="">Proveedores </a>
                         <ul>
-                            <li><a href="Botiquin.html">Botiquin </a></li>
-                            <li><a href="Accesorios.html">Accesorios </a></li>
-                            <li><a href="Insumos.html">Insumos </a></li>
-                            <li><a href="Equipos.html">Equipos </a></li>
+                            <li><a href="Proveedor.php">Botiquin </a></li>
                         </ul>
                 </li>
                 <li><a href="">Cuidado personal </a>
@@ -108,54 +107,60 @@ if(isset($_REQUEST['action']))
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
     <div class="pure-g" >
             <div class="pure-u-1-12">
-                <form action="?action=<?php echo $alm->Id_Enfermedad > 0 ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" >
+                <form action="?action=<?php echo $alm->Id_Proveedor > 0 ? 'actualizar' : 'registrar'; ?>" method="post" class="pure-form pure-form-stacked" >
                     <table>
                         <tr>
-                            <th >Id de enfermedad</th>
-                            <td><input type="text" name="Id_Enfermedad" value="<?php echo $alm->__GET('Id_Enfermedad'); ?>" required /></td>
+                            <th >Id de proveedor</th>
+                            <td><input type="text" name="Id_Proveedor" value="<?php echo $alm->__GET('Id_Proveedor'); ?>" required /></td>
                         </tr>
                         
                             <th >Nombre</th>
                             <td><input type="text" name="Nombre" value="<?php echo $alm->__GET('Nombre'); ?>" required /></td>
                         </tr>
                         <tr>
-                            <th >Gravedad</th>
-                            <td><input type="text" name="Gravedad" value="<?php echo $alm->__GET('Gravedad'); ?>" required /></td>
+                            <th >T&eacutelefono</th>
+                            <td><input type="text" name="Telefono" value="<?php echo $alm->__GET('Telefono'); ?>" required /></td>
                         </tr>
                         <tr>
-                            <th >Descripcion</th>
-                            <td><input type="text" name="Descripcion" value="<?php echo $alm->__GET('Descripcion'); ?>" required  /></td>
+                            <th >Direeci&oacuten</th>
+                            <td><input type="text" name="Direccion" value="<?php echo $alm->__GET('Direccion'); ?>" required  /></td>
                         </tr>
-                         <tr>
+                        <tr>
+                            <th >Estado</th>
+                            <td><input type="text" name="Estado" value="<?php echo $alm->__GET('Estado'); ?>" required  /></td>
+                        </tr>
+                        <tr>
                             <td colspan="2">
-                                <button type="submit" class="pure-button pure-button-primary">Guardar</button>
+                                <button type="submit" class="pure-button pure-button-primary">Aceptar</button>
                             </td>
                         </tr>
                     </table>
         </br>
                 </form> 
-                    <table class="pure-table pure-table-horizontal" width="1000px" BGCOLOR="#22F8BC">
+                    <table class="pure-table pure-table-horizontal" BGCOLOR="#22F8BC">
                         <thead>
                             <tr>
-                                <th >Id de enfermdedad</th>
+                                <th >Id proveedor</th>
                                 <th >Nombre</th>
-                                <th >Gravedad</th>
-                                <th >Descripcion</th>
+                                <th >T&eacutelefono</th>
+                                <th >Direcci&oacuten</th>
+                                <th >Estado</th>
                                 <th></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <?php foreach($model->Listar() as $r): ?>
                             <tr>
-                                <td align="center" width="50px"><?php echo $r->__GET('Id_Enfermedad'); ?></td>
+                                <td align="center"><?php echo $r->__GET('Id_Proveedor'); ?></td>
                                 <td align="center"><?php echo $r->__GET('Nombre'); ?></td>
-                                <td align="center"><?php echo $r->__GET('Gravedad'); ?></td>
-                                <td align="center"><?php echo $r->__GET('Descripcion'); ?></td>
+                                <td align="center"><?php echo $r->__GET('Telefono'); ?></td>
+                                <td align="center"><?php echo $r->__GET('Direccion'); ?></td>
+                                <td align="center"><?php echo $r->__GET('Estado'); ?></td>
                                 <td>
-                                    <a href="?action=editar&Id_Enfermedad=<?php echo $r->Id_Enfermedad; ?>">Editar</a>
+                                    <a href="?action=editar&Id_Proveedor=<?php echo $r->Id_Proveedor; ?>">Editar</a>
                                 </td>
                                 <td>
-                                    <a href="?action=eliminar&Id_Enfermedad=<?php echo $r->Id_Enfermedad; ?>">Eliminar</a>
+                                    <a href="?action=eliminar&Id_Proveedor=<?php echo $r->Id_Proveedor; ?>">Eliminar</a>
                                 </td>
                             </tr>
 
